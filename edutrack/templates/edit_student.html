@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,4 +17,24 @@
         <a href="/students" class="btn">Back to Students</a>
     </div>
 </body>
+=======
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Student</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Student</h1>
+        <form method="POST" class="form-box">
+            UUCMS No: <input type="text" name="uucms" value="{{ student['uucms'] }}" required><br><br>
+            Name: <input type="text" name="name" value="{{ student['name'] }}" required><br><br>
+            Age: <input type="number" name="age" value="{{ student['age'] }}" required><br><br>
+            <input type="submit" value="Update Student" class="btn">
+        </form>
+        <a href="/students" class="btn">Back to Students</a>
+    </div>
+</body>
+>>>>>>> 17e724bd1a71718813cf1130145dd3e8492dc5b9
 </html>
