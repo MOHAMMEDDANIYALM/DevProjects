@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  email         String         @unique
+  passwordHash  String
+  name          String?
+  bodyType      String?
+  meals         Meal[]
+  mealPlans     MealPlan[]
+  workouts      Workout[]
+  progressNotes ProgressNote[]
+  chats         ChatMessage[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model Meal {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String   @db.ObjectId
+  user        User?    @relation(fields: [userId], references: [id])
+  name        String
+  time        DateTime
+  category    String
+  calories    Int
+  protein     Int
+  carbs       Int
+  fats        Int
+  ingredients String?
+  imageUrl    String?
+  completed   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
+
+model MealPlan {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId         String   @db.ObjectId
+  user           User?    @relation(fields: [userId], references: [id])
+  title          String
+  description    String?
+  targetCalories Int
+  targetProtein  Int
+  days           Json?
+  createdAt      DateTime @default(now())
+}
+
+model Workout {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  user      User?    @relation(fields: [userId], references: [id])
+  title     String
+  date      DateTime
+  exercises Json?
+  notes     String?
+  createdAt DateTime @default(now())
+}
+
+model ProgressNote {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  user      User?    @relation(fields: [userId], references: [id])
+  type      String
+  data      Json
+  createdAt DateTime @default(now())
+}
+
+model ChatMessage {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  user      User?    @relation(fields: [userId], references: [id])
+  role      String
+  content   String
+  createdAt DateTime @default(now())
+}
